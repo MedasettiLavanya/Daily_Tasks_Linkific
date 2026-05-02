@@ -1,0 +1,124 @@
+# Day 14 - API Testing & Postman Automation
+
+## 📌 Status
+✅ Completed
+
+---
+
+## 🎯 Day 14 Objective
+Day 14 focused on learning **API Testing fundamentals** and performing hands-on practice using **Postman**.  
+The goal was to understand how APIs work, how to test them, and how to automate API test cases using Postman features.
+
+---
+
+## 🛠 Tools & Technologies Used
+- Postman
+- REST APIs
+- JSON
+- HTTP Methods
+- Postman Environment Variables
+- Postman Tests (JavaScript)
+- Postman Collections
+- Newman (CLI execution - optional)
+
+---
+
+## 📚 Concepts Covered in Day 14
+
+---
+
+# 1️⃣ What is an API?
+API (Application Programming Interface) is a communication method that allows two applications to exchange data.
+
+Instead of testing UI screens, API testing validates the backend functionality directly.
+
+---
+
+# 2️⃣ API Testing vs UI Testing
+
+| Feature | API Testing | UI Testing |
+|--------|------------|------------|
+| Speed | Faster | Slower |
+| Stability | More stable | UI changes can break tests |
+| Coverage | Backend validation | Frontend validation |
+| Execution | Lightweight | Requires browser setup |
+
+---
+
+# 3️⃣ Client-Server Architecture
+API testing is based on request-response model:
+
+- Client sends request (Postman)
+- Server processes request
+- Server returns response (JSON/XML)
+
+---
+
+# 4️⃣ HTTP Methods Practiced
+The following REST API methods were learned and executed:
+
+### ✅ GET
+Used to retrieve data from server.
+
+### ✅ POST
+Used to create new data.
+
+### ✅ PUT
+Used to update complete existing data.
+
+### ✅ PATCH
+Used to update partial data.
+
+### ✅ DELETE
+Used to remove existing data.
+
+---
+
+# 5️⃣ Understanding HTTP Status Codes
+Common status codes practiced:
+
+| Code | Meaning |
+|------|---------|
+| 200 | OK (Success) |
+| 201 | Created |
+| 204 | No Content |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 500 | Internal Server Error |
+
+---
+
+# 6️⃣ Request Components
+Each API request consists of:
+
+
+
+### 🔹 URL / Endpoint
+Example:
+
+
+
+### 🔹 Headers
+Example:
+- Content-Type: application/json
+- Authorization: Bearer Token
+
+### 🔹 Body (for POST/PUT/PATCH)
+Example JSON payload:
+```json
+{
+  "name": "Lavanya",
+  "job": "QA Tester"
+}
+
+
+
+
+
+
+
+
+
+
