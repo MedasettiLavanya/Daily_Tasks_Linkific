@@ -1,0 +1,262 @@
+# 🚀 Day 15 — Performance Testing with Apache JMeter
+
+![Performance Testing](https://img.shields.io/badge/Performance-Testing-blue)
+![JMeter](https://img.shields.io/badge/Apache-JMeter%205.6.3-red)
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Status](https://img.shields.io/badge/Status-Completed-green)
+
+> **Day 15 of 30-Day QA Testing Challenge**
+> Topic: Performance Testing Fundamentals using Apache JMeter
+
+---
+
+## 📌 What I Learned Today
+
+- ✅ What performance testing is and why it matters
+- ✅ 6 types of performance testing
+- ✅ Key performance metrics and how to read them
+- ✅ How to install and configure Apache JMeter
+- ✅ How to create load tests using Thread Group, Samplers, and Listeners
+- ✅ How to analyze results from View Results Tree and Summary Report
+- ✅ How to identify an application's breaking point
+
+---
+
+## 🛠️ Tools & Technologies
+
+| Tool | Version | Purpose |
+|------|---------|---------|
+| Apache JMeter | 5.6.3 | Performance testing tool |
+| Java | 21 | Required runtime for JMeter |
+| JSONPlaceholder API | - | Free fake REST API for testing |
+
+---
+
+## 📚 Concepts Covered
+
+### 6 Types of Performance Testing
+
+| Type | Purpose |
+|------|---------|
+| 🔵 Load Testing | Normal and peak load simulation |
+| 🔴 Stress Testing | Push beyond normal load to find limits |
+| ⚡ Spike Testing | Sudden surge in users |
+| ⏳ Endurance Testing | Extended period to detect memory leaks |
+| 📈 Scalability Testing | Gradually increasing users |
+| 🗄️ Volume Testing | Large data sets |
+
+### Key Performance Metrics
+
+| Metric | What It Measures |
+|--------|-----------------|
+| Response Time | Time from request to reply (ms) |
+| Throughput | Requests handled per second |
+| Error Rate | % of failed requests |
+| CPU Usage | Server processing power consumed |
+| Memory Usage | RAM consumption over time |
+| Network Bandwidth | Data flowing per second |
+
+---
+
+## 🧪 Test Scenarios
+
+### Scenario 1 — Web Application Load Test
+
+```
+Endpoint : https://jsonplaceholder.typicode.com/posts
+Users    : 50
+Ramp-up  : 10 seconds
+Loops    : 3
+Total    : 150 requests
+```
+
+| Metric | Result |
+|--------|--------|
+| Avg Response Time | 75ms ✅ |
+| Error Rate | 0.00% ✅ |
+| Throughput | 15.0/sec ✅ |
+
+---
+
+### Scenario 2 — API Load Test
+
+```
+Endpoint : https://jsonplaceholder.typicode.com/users
+Users    : 20
+Ramp-up  : 10 seconds
+Loops    : 5
+Total    : 100 requests
+```
+
+| Metric | Result |
+|--------|--------|
+| Avg Response Time | 66ms ✅ |
+| Error Rate | 0.00% ✅ |
+| Throughput | 10.3/sec ✅ |
+
+---
+
+### Scenario 3 — Database Load Test
+
+```
+Endpoint : https://jsonplaceholder.typicode.com/posts/1/comments
+Users    : 30
+Ramp-up  : 15 seconds
+Loops    : 4
+Total    : 120 requests
+```
+
+| Metric | Result |
+|--------|--------|
+| Avg Response Time | 262ms ✅ |
+| Max Response Time | 8507ms ⚠️ |
+| Error Rate | 0.00% ✅ |
+
+> ⚠️ Max response time of 8.5s indicates occasional slow queries under load
+
+---
+
+### Scenario 4 — Gradually Increase Load
+
+```
+Endpoint : https://jsonplaceholder.typicode.com/posts
+Users    : 100
+Ramp-up  : 100 seconds (1 user/second)
+Loops    : 2
+Total    : 200 requests
+```
+
+**Finding:**
+- Under 20 users → ✅ 200 OK
+- Above 20 users → ❌ 429 Too Many Requests
+
+> ⚠️ Breaking point discovered at ~20 concurrent users!
+
+---
+
+### Scenario 5 — Breaking Point Test
+
+```
+Endpoint : https://jsonplaceholder.typicode.com/posts
+Users    : 20
+Ramp-up  : 5 seconds
+Loops    : 3
+Total    : 60 requests
+```
+
+| Metric | Result |
+|--------|--------|
+| Avg Response Time | 71ms ✅ |
+| Error Rate | 0.00% ✅ |
+| Throughput | 46.0/min ✅ |
+
+> ✅ 20 users = safe limit for this API
+
+---
+
+## 📊 Overall Results Summary
+
+| Scenario | Users | Avg Response | Error Rate | Status |
+|----------|-------|-------------|------------|--------|
+| Web App Load | 50 | 75ms | 0.00% | ✅ Pass |
+| API Load | 20 | 66ms | 0.00% | ✅ Pass |
+| Database Load | 30 | 262ms | 0.00% | ✅ Pass |
+| Gradual Increase | 100 | — | Errors at 20+ | ⚠️ Breaking Point |
+| Breaking Point | 20 | 71ms | 0.00% | ✅ Pass |
+
+---
+
+## 🔑 Key Findings
+
+> **Breaking Point:** The JSONPlaceholder API returns `429 Too Many Requests` beyond **20 concurrent users** due to rate limiting.
+
+### Response Codes Encountered
+
+| Code | Meaning | Count |
+|------|---------|-------|
+| 200 | Success | Most requests |
+| 429 | Too Many Requests | Scenario 4 (20+ users) |
+
+---
+
+## 📁 Project Structure
+
+```
+Day15-Performance-Testing/
+│
+├── 📄 README.md                    ← You are here
+│
+├── 🧪 JMeter Test Plans
+│   ├── WebAppLoadTest.jmx
+│   ├── APILoadTest.jmx
+│   ├── DatabaseLoadTest.jmx
+│   ├── GraduallyIncreaseLoad.jmx
+│   └── BreakingPointTest.jmx
+│
+└── 📊 Results
+    ├── Scenario1_Results.png
+    ├── Scenario2_Results.png
+    ├── Scenario3_Results.png
+    ├── Scenario4_Results.png
+    └── Scenario5_Results.png
+```
+
+---
+
+## ⚙️ How to Run These Tests
+
+### Prerequisites
+```bash
+# Verify Java is installed
+java -version
+# Should show Java 8 or above
+```
+
+### Steps
+1. Download [Apache JMeter 5.6.3](https://jmeter.apache.org/download_jmeter.cgi)
+2. Extract and go to `bin/` folder
+3. Double click `jmeter.bat` (Windows) or `jmeter.sh` (Mac/Linux)
+4. Open any `.jmx` file: `File → Open`
+5. Click the ▶ **Play** button to run
+6. View results in **View Results Tree** and **Summary Report**
+
+---
+
+## 💡 Lessons Learned
+
+1. Performance testing reveals issues that **functional testing misses**
+2. Response time under 100ms is excellent for under 20 concurrent users
+3. **Rate limiting (429)** is a common real-world bottleneck
+4. Database-related queries have **higher max response times** under load
+5. Gradual ramp-up is the most effective way to **naturally discover breaking points**
+6. Always monitor **all 6 metrics together** — no single metric tells the full story
+
+---
+
+## 🗓️ Challenge Progress
+
+| Day | Topic | Status |
+|-----|-------|--------|
+| Day 13 | API Testing | ✅ Done |
+| Day 14 | API Automation | ✅ Done |
+| **Day 15** | **Performance Testing** | ✅ Done |
+| Day 16 | Advanced JMeter | 🔜 Next |
+| Day 17 | Security Testing | 🔜 Upcoming |
+
+---
+
+## 🔗 Resources
+
+- [Apache JMeter Official Docs](https://jmeter.apache.org/usermanual/index.html)
+- [JSONPlaceholder API](https://jsonplaceholder.typicode.com)
+- [JMeter Best Practices](https://jmeter.apache.org/usermanual/best-practices.html)
+
+---
+
+<div align="center">
+
+**⭐ If this helped you, give it a star!**
+
+*Part of my 30-Day QA Testing Challenge*
+
+</div>
